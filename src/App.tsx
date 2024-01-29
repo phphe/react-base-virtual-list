@@ -26,7 +26,6 @@ function App() {
         <VirtualList
           items={items}
           style={{ height: '600px' }}
-          itemSize={21}
         ></VirtualList>
       </div>
     </div>

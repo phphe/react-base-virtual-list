@@ -13,69 +13,66 @@ export function VirtualList(
   props,
 ) {
   const buffer = props.buffer || 100
-  let scrollTop = 0
-  const itemSize = props.itemSize || 100
-  let listSize = props.listSize || 1000
+  const [itemSize, setitemSize] = useState(props.itemSize || 100);
   const count = props.items.length
   const list = useRef(null);
-  const [visible, setvisible] = useState([]);
-  const [listInnerStyle, setlistInnerStyle] = useState(() => ({}));
+  const listInner = useRef(null);
   const prevScrollTop = useRef(0);
-  const created = useRef(false);
+  const [scrollTop, setscrollTop] = useState(0);
+  const [listSize, setlistSize] = useState(props.listSize || 1000);
   // 
-  const update = () => {
-    if (created.current) {
-      scrollTop = list.current!.scrollTop
-      listSize = list.current!.clientHeight
-    }
-    const totalSpace = itemSize * count
-    let topSpace = scrollTop - buffer
-    let bottomSpace = totalSpace - scrollTop - listSize - buffer
-    let startIndex, endIndex
+  const totalSpace = itemSize * count
+  let topSpace = scrollTop - buffer
+  let bottomSpace = totalSpace - scrollTop - listSize - buffer
+  let startIndex, endIndex
 
-    if (topSpace <= 0) {
-      topSpace = 0
-      startIndex = 0
-    } else {
-      startIndex = Math.floor(topSpace / itemSize)
-    }
-    if (totalSpace <= listSize) {
-      endIndex = count
-    } else {
-      endIndex = count - Math.floor(bottomSpace / itemSize)
-    }
-    if (bottomSpace < 0) {
-      bottomSpace = 0
-    }
-    const visible = props.items.slice(startIndex, endIndex)
-    let listInnerStyle = { paddingTop: `${topSpace}px`, boxSizing: 'border-box' }
-    if (bottomSpace < itemSize * 5) {
-      listInnerStyle['paddingBottom'] = `${bottomSpace}px`
-    } else {
-      listInnerStyle['height'] = `${totalSpace}px`
-    }
-    setvisible(visible)
-    setlistInnerStyle(listInnerStyle)
+  if (topSpace <= 0) {
+    topSpace = 0
+    startIndex = 0
+  } else {
+    startIndex = Math.floor(topSpace / itemSize)
   }
-  // on created
-  if (!created.current) {
-    update()
-    created.current = true;
+  if (totalSpace <= listSize) {
+    endIndex = count
+  } else {
+    endIndex = count - Math.floor(bottomSpace / itemSize)
   }
-  const handleScroll = () => {
-    scrollTop = list.current!.scrollTop
-    if (Math.abs(prevScrollTop.current - scrollTop) > itemSize) {
-      update()
-      prevScrollTop.current = scrollTop
-    }
+  if (bottomSpace < 0) {
+    bottomSpace = 0
   }
-  // 
+  const visible = props.items.slice(startIndex, endIndex)
+  const listInnerStyle = { paddingTop: `${topSpace}px`, boxSizing: 'border-box' }
+  if (bottomSpace < itemSize * 5) {
+    listInnerStyle['paddingBottom'] = `${bottomSpace}px`
+  } else {
+    listInnerStyle['height'] = `${totalSpace}px`
+  }
   useEffect(() => {
-    update()
-  }, []);
+    setlistSize(list.current!.clientHeight)
+    if (props.itemSize == null) {
+      // get avg item size
+      let count = 0
+      let totalHeight = 0
+      for (const el of listInner.current.children) {
+        const style = getComputedStyle(el)
+        totalHeight += el.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
+        count++
+      }
+      setitemSize(totalHeight / count)
+    }
+  }, [props.itemSize, props.items]);
+  //
+  const handleScroll = () => {
+    setlistSize(list.current!.clientHeight)
+    const scrollTop2 = list.current!.scrollTop
+    if (Math.abs(prevScrollTop.current - scrollTop2) > itemSize) {
+      setscrollTop(scrollTop2)
+      prevScrollTop.current = scrollTop2
+    }
+  }
   // 
   return <div ref={list} onScroll={handleScroll} style={{ height: '500px', overflow: 'auto', }}>
-    <div style={listInnerStyle}>
+    <div ref={listInner} style={{ display: 'flex', flexDirection: 'column', ...listInnerStyle }}>
       {visible.map((item, i) => <div key={item.id}>{item.text}</div>)}
     </div>
   </div>
