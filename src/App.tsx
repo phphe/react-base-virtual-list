@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { VirtualList, } from './VirtualList'
 import exampleData from './example_data.json'
 

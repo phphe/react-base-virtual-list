@@ -1,30 +1,36 @@
 import React, {
   useState,
   useMemo,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useCallback,
-  ReactNode,
-  createContext,
-} from 'react'
+  useEffect, useRef, ReactNode
+} from 'react';
 
-export function VirtualList(
-  props,
+export type Props<ITEM> = {
+  itemSize?: number,
+  buffer?: number,
+  items: ITEM[],
+  renderItem: (item: ITEM, index: number) => ReactNode
+} & typeof defaultProps
+
+export const defaultProps = {
+  listSize: 1000,
+}
+export function VirtualList<ITEM>(
+  props: Props<ITEM> & React.HTMLProps<HTMLElement>,
 ) {
   const [itemSize, setitemSize] = useState(props.itemSize || 100);
   const buffer = useMemo(() => props.buffer || Math.max(itemSize * 5, 100), [props.buffer, itemSize]);
   const count = props.items.length
-  const list = useRef(null);
-  const listInner = useRef(null);
+  const list = useRef<HTMLDivElement>(null);
+  const listInner = useRef<HTMLDivElement>(null);
   const prevScrollTop = useRef(0);
   const [scrollTop, setscrollTop] = useState(0);
-  const [listSize, setlistSize] = useState(props.listSize || 1000);
+  const [listSize, setlistSize] = useState(props.listSize);
+
   // 
   const totalSpace = itemSize * count
   let topSpace = scrollTop - buffer
   let bottomSpace = totalSpace - scrollTop - listSize - buffer
-  let startIndex, endIndex
+  let startIndex = 0, endIndex = 0
 
   if (topSpace <= 0) {
     topSpace = 0
@@ -41,7 +47,7 @@ export function VirtualList(
     bottomSpace = 0
   }
   const visible = props.items.slice(startIndex, endIndex)
-  const listInnerStyle = { paddingTop: `${topSpace}px`, boxSizing: 'border-box' }
+  const listInnerStyle: any = { paddingTop: `${topSpace}px`, boxSizing: 'border-box' }
   if (bottomSpace < itemSize * 5) {
     listInnerStyle['paddingBottom'] = `${bottomSpace}px`
   } else {
@@ -53,9 +59,9 @@ export function VirtualList(
       // get avg item size
       let count = 0
       let totalHeight = 0
-      for (const el of listInner.current.children) {
+      for (const el of listInner.current!.children) {
         const style = getComputedStyle(el)
-        totalHeight += el.offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
+        totalHeight += (el as HTMLElement).offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
         count++
       }
       setitemSize(totalHeight / count)
@@ -77,3 +83,5 @@ export function VirtualList(
     </div>
   </div>
 }
+
+VirtualList.defaultProps = defaultProps
