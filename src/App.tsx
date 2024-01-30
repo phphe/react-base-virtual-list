@@ -1,34 +1,32 @@
 import { useMemo } from 'react'
-import './App.css'
-import { VirtualList, } from './components/VirtualList'
+import { VirtualList, } from './VirtualList'
+import exampleData from './example_data.json'
 
 function App() {
-  const items = useMemo(
-    () =>
-      new Array(1000).fill(1).map((v, i) => ({
-        id: i,
-        text: 'Item ' + i,
-        lineHeight: 20 + (i % 20) + 'px',
-        width: 100 + (i % 30) + 'px',
-      })),
-    [],
-  )
-
-  const styles = {
-    node: {
-      border: '1px solid #ccc',
-    },
-  }
   return (
-    <div>
+    <>
+      <b>@phphe/react-base-virtual-list</b> on <a href="https://github.com/phphe/react-base-virtual-list">Github</a>
       <div>
-        <h1>vertical</h1>
-        <VirtualList
-          items={items}
-          style={{ height: '600px' }}
-        ></VirtualList>
-      </div>
-    </div>
+        <h1>Virtual List Demo</h1>
+        <ul>
+          <li>Dynamic, the list items are not the same height.</li>
+          <li>1000 items in the demo.</li>
+        </ul>
+        <div>
+          <VirtualList
+            items={exampleData}
+            style={{ height: '600px', width: '600px', border: '1px solid #ccc', padding: '10px' }}
+            renderItem={(item, index) => <div key={index} style={{ marginBottom: '10px' }}>
+              <h3>{index}. {item.headline}</h3>
+              <div>
+                <div style={{ float: 'left', width: '100px', height: '100px', background: '#f0f0f0', borderRadius: '5px', marginRight: '10px' }}></div>
+                {item.content}
+              </div>
+            </div>}
+          ></VirtualList><a href="https://github.com/phphe/react-base-virtual-list/blob/main/src/App.tsx">Source Code</a>
+        </div>
+      </div >
+    </>
   )
 }
 

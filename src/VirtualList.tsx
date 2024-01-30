@@ -12,8 +12,8 @@ import React, {
 export function VirtualList(
   props,
 ) {
-  const buffer = props.buffer || 100
   const [itemSize, setitemSize] = useState(props.itemSize || 100);
+  const buffer = useMemo(() => props.buffer || Math.max(itemSize * 5, 100), [props.buffer, itemSize]);
   const count = props.items.length
   const list = useRef(null);
   const listInner = useRef(null);
@@ -71,9 +71,9 @@ export function VirtualList(
     }
   }
   // 
-  return <div ref={list} onScroll={handleScroll} style={{ height: '500px', overflow: 'auto', }}>
+  return <div ref={list} onScroll={handleScroll} className={props.className} style={{ overflow: 'auto', ...props.style }}>
     <div ref={listInner} style={{ display: 'flex', flexDirection: 'column', ...listInnerStyle }}>
-      {visible.map((item, i) => <div key={item.id}>{item.text}</div>)}
+      {visible.map((item, i) => props.renderItem(item, i + startIndex))}
     </div>
   </div>
 }
