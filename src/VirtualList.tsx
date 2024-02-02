@@ -1,12 +1,17 @@
 import React, {
   useState,
   useMemo,
-  useEffect, useRef, ReactNode, useLayoutEffect, useImperativeHandle, forwardRef,
+  useEffect, useRef, ReactNode, useLayoutEffect, useImperativeHandle, forwardRef as forwardRef0,
 } from 'react';
 
 type OptionalKeys<T> = {
   [K in keyof T]?: T[K];
 };
+// fix forwardRef type for generic types. refer: https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref
+type FixedForwardRef = < T, P = {} > (
+  render: (props: P, ref: React.Ref<T>) => React.ReactElement | null,
+) => (props: P & React.RefAttributes<T>) => React.ReactElement | null;
+const forwardRef = forwardRef0 as FixedForwardRef
 
 export type Props<ITEM> = {
   itemSize?: number,
@@ -26,7 +31,7 @@ export interface VirtualListHandle {
   scrollToIndex(index: number): void
 }
 
-export const VirtualList = forwardRef(function <ITEM>(
+const VirtualList0 = function <ITEM>(
   props: Props<ITEM>,
   ref: React.ForwardedRef<VirtualListHandle>
 ) {
@@ -108,6 +113,8 @@ export const VirtualList = forwardRef(function <ITEM>(
       {visible.map((item, i) => props.renderItem(item, visibleIndexes[i]))}
     </div>
   </div>
-})
+}
 
-VirtualList.defaultProps = defaultProps
+VirtualList0.defaultProps = defaultProps
+
+export const VirtualList = forwardRef(VirtualList0)
