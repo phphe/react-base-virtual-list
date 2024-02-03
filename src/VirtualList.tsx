@@ -18,7 +18,7 @@ export type Props<ITEM> = {
   buffer?: number,
   items: ITEM[],
   renderItem: (item: ITEM, index: number) => ReactNode,
-  sticky?: number[], // index[]
+  persistentIndices?: number[], // index[]
   className?: string,
   style?: React.CSSProperties,
 } & OptionalKeys<typeof defaultProps>
@@ -65,8 +65,8 @@ export const VirtualList = forwardRef(function <ITEM>(
     endIndex = count - Math.floor(bottomSpace / itemSize)
   }
   const mainVisibleIndexes = Array.from({ length: endIndex - startIndex }, (_, index) => index + startIndex);
-  let visibleIndexes = mainVisibleIndexes.concat(props.sticky || [])
-  if (props.sticky?.length) {
+  let visibleIndexes = mainVisibleIndexes.concat(props.persistentIndices || [])
+  if (props.persistentIndices?.length) {
     visibleIndexes = [...new Set(visibleIndexes)].sort((a, b) => a - b)
   }
   const visible = visibleIndexes.map(i => props.items[i])

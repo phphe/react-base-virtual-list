@@ -5,12 +5,14 @@ export default function StickyExample() {
   return <>
     <h2>Sticky</h2>
     <ul>
-      <li>"sticky" support multiple items.</li>
+      <li>Use prop 'persistentIndices' to make items persistent.</li>
+      <li>"persistentIndices" support multiple items.</li>
+      <li>Use css 'position:sticky' make items sticky.</li>
     </ul>
     <VirtualList
       items={exampleData}
       style={{ height: '600px', border: '1px solid #ccc', padding: '10px' }}
-      sticky={[1]} // sticky the second item
+      persistentIndices={[1]} // sticky the second item
       renderItem={(item, index) => <div key={index} style={{ marginBottom: '10px', ...index === 1 && { position: 'sticky', top: 0, background: '#fff', zIndex: 2 } }}>
         <h3>{index}. {item.headline}</h3>
         <div>
