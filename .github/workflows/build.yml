@@ -2,8 +2,13 @@ name: Build Demo and Deploy to Github Pages
 permissions:
   contents: write
 on:
-  release:
-    types: [prereleased, released, published]
+  # release:
+  #   types: [prereleased, released, published]
+  # above does not work
+  workflow_run:
+    workflows: ["release.yml"]
+    types:
+      - completed
 
 jobs:
   build:
