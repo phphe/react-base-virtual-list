@@ -128,3 +128,7 @@ interface VirtualListHandle {
 
 - unpkg: https://unpkg.com/@phphe/react-base-virtual-list
 - jsdelivr: https://cdn.jsdelivr.net/npm/@phphe/react-base-virtual-list
+
+## 更新日志(changelog)
+
+https://github.com/phphe/react-base-virtual-list/releases
