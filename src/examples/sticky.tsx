@@ -1,5 +1,5 @@
 import exampleData from './example_data.json'
-import { VirtualList, } from '../VirtualList'
+import { VirtualList, } from '../../lib/VirtualList'
 
 export default function StickyExample() {
   return <>

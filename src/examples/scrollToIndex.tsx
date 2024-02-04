@@ -2,7 +2,7 @@ import React, {
   useRef
 } from 'react';
 import exampleData from './example_data.json'
-import { VirtualList, VirtualListHandle } from '../VirtualList'
+import { VirtualList, VirtualListHandle } from '../../lib/VirtualList'
 
 export default function ScrollToIndexExample() {
   const ref = useRef<VirtualListHandle>(null);
