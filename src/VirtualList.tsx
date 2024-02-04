@@ -13,17 +13,35 @@ export type FixedForwardRef = < T, P = {} > (
 ) => (props: P & React.RefAttributes<T>) => React.ReactElement | null;
 const forwardRef = React.forwardRef as FixedForwardRef
 
-export type Props<ITEM> = {
+export type VirtualListProps<ITEM> = {
+  /**
+   * Estimated average size of each list item.
+   */
   itemSize?: number,
+  /**
+   * render space = list visible space + buffer x 2
+   */
   buffer?: number,
+  /**
+   * List of items to render.
+   */
   items: ITEM[],
+  /**
+   * Render function for each list item.
+   */
   renderItem: (item: ITEM, index: number) => ReactNode,
+  /**
+   * These items won't be removed when scroll. You can use css 'position:sticky' make them sticky.
+   */
   persistentIndices?: number[], // index[]
   className?: string,
   style?: React.CSSProperties,
 } & OptionalKeys<typeof defaultProps>
 
 export const defaultProps = {
+  /**
+   * The visible space of the list. It is only used before DOM created(SSR).
+   */
   listSize: 1000,
 }
 
@@ -33,7 +51,7 @@ export interface VirtualListHandle {
 }
 
 export const VirtualList = forwardRef(function <ITEM>(
-  props: Props<ITEM>,
+  props: VirtualListProps<ITEM>,
   ref: React.ForwardedRef<VirtualListHandle>
 ) {
   const [itemSize, setitemSize] = useState(props.itemSize || 100);
