@@ -9,6 +9,7 @@ React 基础虚拟列表。[在线示例](TODO)
 - 支持每项高度不同的列表。
 - 简单易扩展，只含有常见功能。
 - 高性能。针对每项高度不同的列表，不会获取每项的高度。
+- 导出文件包含 typescript 定义文件, cjs 文件，es 文件，iife 文件和 iife source map。iife 文件供浏览器直接调用，见 [iife](#iife).
 
 ## 安装
 
@@ -117,3 +118,13 @@ interface VirtualListHandle {
 ## 注意点
 
 - 记得给列表设置高度。class, style, px, em, 百分比等都可以。
+
+## iife
+
+`dist/index.iife.js`文件可以在浏览器里运行。
+你可以托管它到你的服务器，然后使用`script`标签引入。在引入前你还需引入`react`, `react-dom`. 此文件暴露的全局变量是`reactBaseVirtualList`, 你可以通过`window.reactBaseVirtualList`获取此文件的所有导出，通过`window.reactBaseVirtualList.VirtualList`获取导出的主要组件。
+
+你也可以使用如下第三方 CDN 的地址引入。
+
+- unpkg: https://unpkg.com/@phphe/react-base-virtual-list
+- jsdelivr: https://cdn.jsdelivr.net/npm/@phphe/react-base-virtual-list
