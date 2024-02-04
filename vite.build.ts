@@ -27,7 +27,13 @@ export const globals = {
 export const isIIFE = detectIIFE();
 export const formats: LibraryFormats[] = !isIIFE ? ["es", "cjs"] : ["iife"];
 export default defineConfig({
-  plugins: [react(), !isIIFE && dts()],
+  plugins: [
+    react(),
+    !isIIFE &&
+      dts({
+        insertTypesEntry: true, // Generate entry of types. Entry path is 'types' in package.json
+      }),
+  ],
   build: {
     sourcemap: isIIFE,
     emptyOutDir: !isIIFE,
