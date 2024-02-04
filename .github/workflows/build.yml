@@ -1,4 +1,4 @@
-name: Build Demo, Deploy to Github Pages, Publish to NPM, Release with Changelog
+name: Release with Changelog, Build Demo, Deploy to Github Pages, Publish to NPM
 # concat workflows because it is not easy to run trigger multiple. https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
 permissions:
   contents: write
@@ -23,6 +23,11 @@ jobs:
 
       - name: Install
         run: npm install
+
+      - name: Release with Changelog
+        run: npx changelogithub # or changelogithub@0.12 if ensure the stable result
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Build Demo
         run: npm run build:web
@@ -53,7 +58,3 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - name: Release with Changelog
-        run: npx changelogithub # or changelogithub@0.12 if ensure the stable result
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
