@@ -28,7 +28,8 @@ export const defaultProps = {
 }
 
 export interface VirtualListHandle {
-  scrollToIndex(index: number): void
+  scrollToIndex(index: number, block?: 'start' | 'end' | 'center' | 'nearest'): void
+  forceUpdate(): void
 }
 
 export const VirtualList = forwardRef(function <ITEM>(
@@ -41,9 +42,11 @@ export const VirtualList = forwardRef(function <ITEM>(
   const list = useRef<HTMLDivElement>(null);
   const listInner = useRef<HTMLDivElement>(null);
   const prevScrollTop = useRef(0);
+  const scrollToIndexRef = useRef<{ index: number, block: string }>();
   const [scrollTop, setscrollTop] = useState(0);
   const [listSize, setlistSize] = useState(props.listSize!);
-
+  const [forceRerender, setforceRerender] = useState([]); // change value to force rerender
+  const ignoreScrollOnce = useRef(false);
   // 
   const totalSpace = itemSize * count
   let topSpace = scrollTop - buffer
@@ -64,12 +67,12 @@ export const VirtualList = forwardRef(function <ITEM>(
   } else {
     endIndex = count - Math.floor(bottomSpace / itemSize)
   }
-  const mainVisibleIndexes = Array.from({ length: endIndex - startIndex }, (_, index) => index + startIndex);
-  let visibleIndexes = mainVisibleIndexes.concat(props.persistentIndices || [])
+  const mainVisibleIndices = Array.from({ length: endIndex - startIndex }, (_, index) => index + startIndex);
+  let visibleIndices = mainVisibleIndices.concat(props.persistentIndices || [])
   if (props.persistentIndices?.length) {
-    visibleIndexes = [...new Set(visibleIndexes)].sort((a, b) => a - b)
+    visibleIndices = [...new Set(visibleIndices)].sort((a, b) => a - b)
   }
-  const visible = visibleIndexes.map(i => props.items[i])
+  const visible = visibleIndices.map(i => props.items[i])
 
   // 
   const listInnerStyle: any = { paddingTop: `${topSpace}px`, boxSizing: 'border-box' }
@@ -78,39 +81,72 @@ export const VirtualList = forwardRef(function <ITEM>(
   } else {
     listInnerStyle['height'] = `${totalSpace}px`
   }
+
   useLayoutEffect(() => {
     setlistSize(list.current!.clientHeight)
+    // get avg item size
     if (props.itemSize == null) {
-      // get avg item size
       let count = 0
       let totalHeight = 0
+      const persistentIndices = new Set(props.persistentIndices || [])
+      let i = -1
       for (const el of listInner.current!.children) {
+        i++
+        if (persistentIndices.has(visibleIndices[i])) {
+          continue
+        }
         const style = getComputedStyle(el)
         totalHeight += (el as HTMLElement).offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
         count++
       }
       setitemSize(totalHeight / count)
     }
-  }, [props.itemSize, props.items]);
+  }, [props.itemSize, props.items, forceRerender]);
   //
   const handleScroll = () => {
+    if (ignoreScrollOnce.current) {
+      ignoreScrollOnce.current = false
+      return
+    }
     setlistSize(list.current!.clientHeight)
     const scrollTop2 = list.current!.scrollTop
     if (Math.abs(prevScrollTop.current - scrollTop2) > itemSize) {
       setscrollTop(scrollTop2)
       prevScrollTop.current = scrollTop2
+    } else if (scrollToIndexRef.current) {
+      setforceRerender([])
     }
   }
   // 
   useImperativeHandle(ref, () => ({
-    scrollToIndex: (index: number) => {
+    scrollToIndex(index, block = 'start') {
+      scrollToIndexRef.current = {
+        index,
+        block
+      }
       list.current!.scrollTop = index * itemSize
     },
-  }), []);
+    forceUpdate() {
+      setforceRerender([])
+    }
+  }), [itemSize]);
+  useLayoutEffect(() => {
+    if (scrollToIndexRef.current) {
+      const { index, block } = scrollToIndexRef.current;
+      scrollToIndexRef.current = undefined
+      const indexInVisible = visibleIndices.indexOf(index)
+      const el = listInner.current!.children[indexInVisible] as HTMLElement
+      if (el) {
+        // @ts-ignore
+        el.scrollIntoView({ block })
+        ignoreScrollOnce.current = true
+      }
+    }
+  }, [visibleIndices])
   // 
   return <div ref={list} onScroll={handleScroll} className={props.className} style={{ overflow: 'auto', ...props.style }}>
     <div ref={listInner} style={{ display: 'flex', flexDirection: 'column', ...listInnerStyle }}>
-      {visible.map((item, i) => props.renderItem(item, visibleIndexes[i]))}
+      {visible.map((item, i) => props.renderItem(item, visibleIndices[i]))}
     </div>
   </div>
 })
