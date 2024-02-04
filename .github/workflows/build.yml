@@ -3,7 +3,7 @@ permissions:
   contents: write
 on:
   release:
-    types: [released]
+    types: [prereleased, released, published]
 
 jobs:
   build:
