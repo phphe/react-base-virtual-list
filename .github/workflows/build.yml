@@ -1,0 +1,42 @@
+name: Build Demo and Deploy to Github Pages
+permissions:
+  contents: write
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+
+      - name: Install and Build
+        run: npm install && npm run build:web
+
+      - name: Extra Files
+        run: |
+          # Switch to the generated directory
+          cd dist
+
+          # Set custom domain for GitHub Pages
+          # echo "youdomain.com" > CNAME
+
+          # Required to bypass Jekyll on GitHub Pages
+          echo "" > .nojekyll
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.7
+        with:
+          single-commit: true
+          branch: gh-pages
+          clean: true
+          folder: dist
