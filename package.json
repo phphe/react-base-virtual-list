@@ -1,6 +1,15 @@
 {
   "name": "@phphe/react-base-virtual-list",
   "version": "0.0.0",
+  "license": "MIT",
+  "author": "phphe <phphe@outlook.com> (https://github.com/phphe)",
+  "description": "React base virtual list component.",
+  "keywords": [
+    "virtual list",
+    "virtual scroll",
+    "React component"
+  ],
+  "repository": "https://github.com/phphe/react-base-virtual-list.git",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -12,6 +21,11 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "jsdelivr": "dist/index.iife.js",
+  "unpkg": "dist/index.iife.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build --config vite.build.js && vite build --config vite.build.js -- --iife && rm -rf dist/src",
