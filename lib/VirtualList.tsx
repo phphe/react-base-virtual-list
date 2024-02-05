@@ -40,7 +40,7 @@ export type VirtualListProps<ITEM> = {
   /**
    * listen to scroll event.
    */
-  onScroll: typeof document.onscroll,
+  onScroll?: typeof document.onscroll,
   className?: string,
   style?: React.CSSProperties,
 } & OptionalKeys<typeof defaultProps>
