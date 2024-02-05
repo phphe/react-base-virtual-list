@@ -33,6 +33,10 @@ export type VirtualListProps<ITEM> = {
    * These items won't be removed when scroll. You can use css 'position:sticky' make them sticky.
    */
   persistentIndices?: number[], // index[]
+  /**
+   * Minimum distance for triggering a calculation when scrolling.
+   */
+  triggerDistance?: number,
   className?: string,
   style?: React.CSSProperties,
 } & OptionalKeys<typeof defaultProps>
@@ -127,7 +131,9 @@ export const VirtualList = forwardRef(function <ITEM>(
     }
     setlistSize(list.current!.clientHeight)
     const scrollTop2 = list.current!.scrollTop
-    if (Math.abs(prevScrollTop.current - scrollTop2) > itemSize) {
+    if (Math.abs(prevScrollTop.current - scrollTop2) > (props.triggerDistance ?? itemSize)) {
+      console.log('triggerd');
+
       setscrollTop(scrollTop2)
       prevScrollTop.current = scrollTop2
     } else if (scrollToIndexRef.current) {
