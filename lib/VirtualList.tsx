@@ -37,6 +37,10 @@ export type VirtualListProps<ITEM> = {
    * Minimum distance for triggering a calculation when scrolling.
    */
   triggerDistance?: number,
+  /**
+   * listen to scroll event.
+   */
+  onScroll: typeof document.onscroll,
   className?: string,
   style?: React.CSSProperties,
 } & OptionalKeys<typeof defaultProps>
@@ -124,7 +128,7 @@ export const VirtualList = forwardRef(function <ITEM>(
     }
   }, [props.itemSize, props.items, forceRerender]);
   //
-  const handleScroll = () => {
+  const handleScroll = function (event: unknown) {
     if (ignoreScrollOnce.current) {
       ignoreScrollOnce.current = false
       return
@@ -132,13 +136,13 @@ export const VirtualList = forwardRef(function <ITEM>(
     setlistSize(list.current!.clientHeight)
     const scrollTop2 = list.current!.scrollTop
     if (Math.abs(prevScrollTop.current - scrollTop2) > (props.triggerDistance ?? itemSize)) {
-      console.log('triggerd');
-
       setscrollTop(scrollTop2)
       prevScrollTop.current = scrollTop2
     } else if (scrollToIndexRef.current) {
       setforceRerender([])
     }
+    // @ts-ignore
+    props.onScroll?.call(this, event)
   }
   // 
   useImperativeHandle(ref, () => ({
@@ -151,7 +155,7 @@ export const VirtualList = forwardRef(function <ITEM>(
     },
     forceUpdate() {
       setforceRerender([])
-    }
+    },
   }), [itemSize]);
   useLayoutEffect(() => {
     if (scrollToIndexRef.current) {
