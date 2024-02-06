@@ -68,6 +68,7 @@ export const VirtualList = forwardRef(function <ITEM>(
   const listInner = useRef<HTMLDivElement>(null);
   const prevScrollTop = useRef(0);
   const scrollToIndexRef = useRef<{ index: number, block: string }>();
+  const [shouldScrollToIndex, setshouldScrollToIndex] = useState([]);
   const [scrollTop, setscrollTop] = useState(0);
   const [listSize, setlistSize] = useState(props.listSize!);
   const [forceRerender, setforceRerender] = useState([]); // change value to force rerender
@@ -91,6 +92,10 @@ export const VirtualList = forwardRef(function <ITEM>(
     endIndex = count
   } else {
     endIndex = count - Math.floor(bottomSpace / itemSize)
+  }
+  if (!props.virtual) {
+    startIndex = 0
+    endIndex = props.items.length
   }
   const mainVisibleIndices = Array.from({ length: endIndex - startIndex }, (_, index) => index + startIndex);
   let visibleIndices = mainVisibleIndices.concat(props.persistentIndices || [])
@@ -128,18 +133,25 @@ export const VirtualList = forwardRef(function <ITEM>(
     }
   }, [props.itemSize, props.items, forceRerender]);
   //
+
   const handleScroll = function (event: unknown) {
-    if (ignoreScrollOnce.current) {
-      ignoreScrollOnce.current = false
+    if (!props.virtual) {
       return
     }
+    if (scrollToIndexRef.current) {
+      return
+    }
+
     setlistSize(list.current!.clientHeight)
-    const scrollTop2 = list.current!.scrollTop
-    if (Math.abs(prevScrollTop.current - scrollTop2) > (props.triggerDistance ?? itemSize)) {
-      setscrollTop(scrollTop2)
-      prevScrollTop.current = scrollTop2
-    } else if (scrollToIndexRef.current) {
-      setforceRerender([])
+
+    if (ignoreScrollOnce.current) {
+      ignoreScrollOnce.current = false
+    } else {
+      const scrollTop = list.current!.scrollTop;
+      if (Math.abs(prevScrollTop.current - scrollTop) > (props.triggerDistance ?? itemSize)) {
+        setscrollTop(scrollTop)
+        prevScrollTop.current = scrollTop
+      }
     }
     // @ts-ignore
     props.onScroll?.call(this, event)
@@ -151,12 +163,17 @@ export const VirtualList = forwardRef(function <ITEM>(
         index,
         block
       }
-      list.current!.scrollTop = index * itemSize
+      const scrollTop = index * itemSize // estimated value
+      list.current!.scrollTop = scrollTop
+      setscrollTop(scrollTop)
+      prevScrollTop.current = scrollTop
+      setshouldScrollToIndex([]) // ensure re-render but exclude itemSize. setforceRerender will re calculate avg itemSize, so don't use it here.
     },
     forceUpdate() {
       setforceRerender([])
     },
   }), [itemSize]);
+  // scrollToIndex
   useLayoutEffect(() => {
     if (scrollToIndexRef.current) {
       const { index, block } = scrollToIndexRef.current;
@@ -169,10 +186,10 @@ export const VirtualList = forwardRef(function <ITEM>(
         ignoreScrollOnce.current = true
       }
     }
-  }, [visibleIndices])
+  }, [shouldScrollToIndex])
   // 
   return <div ref={list} onScroll={handleScroll} className={props.className} style={{ overflow: 'auto', ...props.style }}>
-    <div ref={listInner} style={{ display: 'flex', flexDirection: 'column', ...listInnerStyle }}>
+    <div ref={listInner} style={{ display: 'flex', flexDirection: 'column', ...(props.virtual && listInnerStyle) }}>
       {visible.map((item, i) => props.renderItem(item, visibleIndices[i]))}
     </div>
   </div>
