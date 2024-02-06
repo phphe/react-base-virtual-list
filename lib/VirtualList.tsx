@@ -50,6 +50,10 @@ export const defaultProps = {
    * The visible space of the list. It is only used before DOM created(SSR).
    */
   listSize: 1000,
+  /**
+   * Whether to enable the virtual list feature.
+   */
+  virtual: true,
 }
 
 export interface VirtualListHandle {
@@ -72,7 +76,7 @@ export const VirtualList = forwardRef(function <ITEM>(
   const [scrollTop, setscrollTop] = useState(0);
   const [listSize, setlistSize] = useState(props.listSize!);
   const [forceRerender, setforceRerender] = useState([]); // change value to force rerender
-  const ignoreScrollOnce = useRef(false);
+  const ignoreUpdateScrollTopOnce = useRef(false);
   // 
   const totalSpace = itemSize * count
   let topSpace = scrollTop - buffer
@@ -144,8 +148,8 @@ export const VirtualList = forwardRef(function <ITEM>(
 
     setlistSize(list.current!.clientHeight)
 
-    if (ignoreScrollOnce.current) {
-      ignoreScrollOnce.current = false
+    if (ignoreUpdateScrollTopOnce.current) {
+      ignoreUpdateScrollTopOnce.current = false
     } else {
       const scrollTop = list.current!.scrollTop;
       if (Math.abs(prevScrollTop.current - scrollTop) > (props.triggerDistance ?? itemSize)) {
@@ -183,7 +187,7 @@ export const VirtualList = forwardRef(function <ITEM>(
       if (el) {
         // @ts-ignore
         el.scrollIntoView({ block })
-        ignoreScrollOnce.current = true
+        ignoreUpdateScrollTopOnce.current = true
       }
     }
   }, [shouldScrollToIndex])
