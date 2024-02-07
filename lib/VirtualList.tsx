@@ -109,7 +109,7 @@ export const VirtualList = forwardRef(function <ITEM>(
     }
     const visible = visibleIndices.map(i => props.items[i])
     return { visible, visibleIndices, topSpace, bottomSpace, totalSpace }
-  }, [itemSize, count, scrollTop, buffer, listSize, props.virtual, props.persistentIndices]);
+  }, [props.items, itemSize, count, scrollTop, buffer, listSize, props.virtual, props.persistentIndices]);
   const { visible, visibleIndices, topSpace, bottomSpace, totalSpace } = mainCache
 
   // 
