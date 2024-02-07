@@ -77,6 +77,7 @@ export default function BaseExample() {
 - `listSize`: `number`, default: 1000. Height of the visible area of the list. Only used before DOM creation, suitable for SSR.
 - `triggerDistance`: `number`. The min distance to trigger re-rendering when scrolling.
 - `onScroll`: `typeof document.onscroll`. Listen for the list's scroll event. Type is same with HTML native onscroll handle.
+- `virtual`: `boolean`. default: `false`. Whether to enable the virtual list feature. Render all items if disabled.
 - `className`: `string`. Add a CSS class to the list root element.
 - `style`: `React.CSSProperties`. Add CSS styles to the list root element.
 
