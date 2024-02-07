@@ -78,35 +78,39 @@ export const VirtualList = forwardRef(function <ITEM>(
   const [forceRerender, setforceRerender] = useState([]); // change value to force rerender
   const ignoreUpdateScrollTopOnce = useRef(false);
   // 
-  const totalSpace = itemSize * count
-  let topSpace = scrollTop - buffer
-  let bottomSpace = totalSpace - scrollTop - listSize - buffer
-  let startIndex = 0, endIndex = 0
+  const mainCache = useMemo(() => {
+    const totalSpace = itemSize * count
+    let topSpace = scrollTop - buffer
+    let bottomSpace = totalSpace - scrollTop - listSize - buffer
+    let startIndex = 0, endIndex = 0
 
-  if (topSpace <= 0) {
-    topSpace = 0
-    startIndex = 0
-  } else {
-    startIndex = Math.floor(topSpace / itemSize)
-  }
-  if (bottomSpace < 0) {
-    bottomSpace = 0
-  }
-  if (totalSpace <= listSize) {
-    endIndex = count
-  } else {
-    endIndex = count - Math.floor(bottomSpace / itemSize)
-  }
-  if (!props.virtual) {
-    startIndex = 0
-    endIndex = props.items.length
-  }
-  const mainVisibleIndices = Array.from({ length: endIndex - startIndex }, (_, index) => index + startIndex);
-  let visibleIndices = mainVisibleIndices.concat(props.persistentIndices || [])
-  if (props.persistentIndices?.length) {
-    visibleIndices = [...new Set(visibleIndices)].sort((a, b) => a - b)
-  }
-  const visible = visibleIndices.map(i => props.items[i])
+    if (topSpace <= 0) {
+      topSpace = 0
+      startIndex = 0
+    } else {
+      startIndex = Math.floor(topSpace / itemSize)
+    }
+    if (bottomSpace < 0) {
+      bottomSpace = 0
+    }
+    if (totalSpace <= listSize) {
+      endIndex = count
+    } else {
+      endIndex = count - Math.floor(bottomSpace / itemSize)
+    }
+    if (!props.virtual) {
+      startIndex = 0
+      endIndex = count
+    }
+    const mainVisibleIndices = Array.from({ length: endIndex - startIndex }, (_, index) => index + startIndex);
+    let visibleIndices = mainVisibleIndices.concat(props.persistentIndices || [])
+    if (props.persistentIndices?.length) {
+      visibleIndices = [...new Set(visibleIndices)].sort((a, b) => a - b)
+    }
+    const visible = visibleIndices.map(i => props.items[i])
+    return { visible, visibleIndices, topSpace, bottomSpace, totalSpace }
+  }, [itemSize, count, scrollTop, buffer, listSize, props.virtual, props.persistentIndices]);
+  const { visible, visibleIndices, topSpace, bottomSpace, totalSpace } = mainCache
 
   // 
   const listInnerStyle: any = { paddingTop: `${topSpace}px`, boxSizing: 'border-box' }
