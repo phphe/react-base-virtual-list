@@ -2,12 +2,12 @@
 
 [English](README.md)
 
-React 基础虚拟列表。[在线示例](https://phphe.github.io/react-base-virtual-list/)
+React 基础虚拟列表，实现了常用功能并且易于二次开发。[在线示例](https://phphe.github.io/react-base-virtual-list/)
 
 ## 特点
 
-- 支持每项高度不同的列表。
-- 简单易扩展，只含有常见功能。
+- 实现了常用功能并且易于二次开发，见[开发指南](#开发指南)。
+- 支持每项高度固定和不固定的列表。
 - 高性能。针对每项高度不同的列表，不会获取每项的高度。
 - 导出文件包含 typescript 定义文件, cjs 文件，es 文件，iife 文件和 iife source map。iife 文件供浏览器直接调用，见 [iife](#iife).
 
@@ -132,6 +132,13 @@ interface VirtualListHandle {
 
 - unpkg: https://unpkg.com/@phphe/react-base-virtual-list
 - jsdelivr: https://cdn.jsdelivr.net/npm/@phphe/react-base-virtual-list
+
+## 开发指南
+
+- `lib`: 主要文件，也是打包成库的文件。运行`npm run build`会打包其中的文件到`dist`目录。对应 vite 配置文件为: `vite.build.ts`.
+- `src`: 开发时调试的文件。运行`npm run dev`会在浏览器中运行其中的代码。运行`npm run build:web`会把其中的代码打包到`dist`目录。对应 vite 配置文件为: `vite.config.ts`.
+- `uno.config.ts`: [unocss](https://github.com/unocss/unocss) 配置文件。`unocss`仅在`src`文件夹生效。当前配置下，你可以使用`Tailwindcss`风格的`class`名。
+- `.github/workflows/build.yml`: 发布到 github 时自动进行的一些操作。你可以删除或者修改。
 
 ## 更新日志(changelog)
 

@@ -2,12 +2,12 @@
 
 [中文](README_CN.md)
 
-React Basic Virtual List. [Online Demo](https://phphe.github.io/react-base-virtual-list/)
+React basic virtual list, supports common features and is easy to customize. [Online Demo](https://phphe.github.io/react-base-virtual-list/)
 
 ## Features
 
-- Supports lists with different item heights.
-- Simple and easy to extend, only contains common features.
+- Supports common features and is easy to customize. Check [Development](#development).
+- Supports lists with fixed height or dynamic height items.
 - High performance. For lists with different item heights, it does not retrieve the height of each item.
 - Exported files include TypeScript definition files, CJS files, ES files, IIFE files, and IIFE source maps. The IIFE file can be use by `script` tag in browser, see [IIFE](#iife).
 
@@ -132,6 +132,13 @@ You can also use the following third-party CDN url to include it.
 
 - unpkg: https://unpkg.com/@phphe/react-base-virtual-list
 - jsdelivr: https://cdn.jsdelivr.net/npm/@phphe/react-base-virtual-list
+
+## Development
+
+- `lib`: The main files, also the files that are packaged into the library. Running `npm run build` will package the files in this directory into the `dist` folder. The corresponding Vite configuration file is `vite.build.ts`.
+- `src`: The files used for development and debugging. Running `npm run dev` will run the code in this directory in the browser. Running `npm run build:web` will package the code in this directory into the `dist` folder. The corresponding Vite configuration file is `vite.config.ts`.
+- `uno.config.ts`: [unocss](https://github.com/unocss/unocss) configuration file. `unocss` only works in the `src` folder. With the current configuration, you can use `Tailwindcss` style class names.
+- `.github/workflows/build.yml`: Some automated actions performed when publishing to GitHub. You can delete or modify it.
 
 ## Changelog
 
