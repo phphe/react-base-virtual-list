@@ -1,6 +1,6 @@
 {
   "name": "@phphe/react-base-virtual-list",
-  "version": "0.0.1-beta.11",
+  "version": "0.0.1-beta.12",
   "license": "MIT",
   "author": "phphe <phphe@outlook.com> (https://github.com/phphe)",
   "description": "React base virtual list component.",
