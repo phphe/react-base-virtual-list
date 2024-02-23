@@ -37,7 +37,7 @@ export type VirtualListProps<ITEM> = {
   /**
    * listen to scroll event.
    */
-  onScroll?: typeof document.onscroll,
+  onScroll?: React.UIEventHandler<HTMLElement>,
   /**
    * Insert elements at the head. Recommended to only insert elements that do not take up space or take very little space, such as position absolute.
    */

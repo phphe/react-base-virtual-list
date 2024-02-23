@@ -76,7 +76,7 @@ export default function BaseExample() {
 - `persistentIndices`: `number[]`. 持久化渲染的项的索引数组。使对应索引的项持续渲染而不会因为在渲染区域外而被删除。你再使用 css 的`position:sticky`就可以使其黏着显示。
 - `listSize`: `number`, 默认值: 1000. 列表的可见区域高度。仅用于 DOM 创建前使用，适用于 SSR.
 - `triggerDistance`: `number`. 滚动时触发重新渲染的距离。
-- `onScroll`: `typeof document.onscroll`. 监听列表的 scorll 事件。类型与 HTML 原生 onscroll 监听器相同。
+- `onScroll`: `React.UIEventHandler`. 监听列表的 scorll 事件。类型与 HTML 原生 onscroll 监听器相同。
 - `virtual`: `boolean`. 默认`false`. 是否启用虚拟列表。不启用则会渲染全部列表项。
 - `className`: `string`. 附加 css class 到根元素。
 - `style`: `React.CSSProperties`. 附加 css style 到根元素。
