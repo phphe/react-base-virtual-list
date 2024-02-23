@@ -9,13 +9,14 @@ React basic virtual list, supports common features and is easy to customize. [On
 - Supports common features and is easy to customize. Check [Development](#development).
 - Supports lists with fixed height or dynamic height items.
 - High performance. For lists with different item heights, it does not retrieve the height of each item.
-- Exported files include TypeScript definition files, CJS files, ES files, IIFE files, and IIFE source maps. The IIFE file can be use by `script` tag in browser, see [IIFE](#iife).
+- Formats of exported files: typescript, cjs, esm, iife, iife source map. iife can be use by `script` tag in browser, see [IIFE](#iife).
 
 ## Installation
 
-```sh
-npm install @phphe/react-base-virtual-list --save
-```
+- npm: `npm install @phphe/react-base-virtual-list`
+- yarn: `yarn add @phphe/react-base-virtual-list`
+- pnpm: `pnpm add @phphe/react-base-virtual-list`
+- CDN: Check [iife](#iife).
 
 ## Usage
 

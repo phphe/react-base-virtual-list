@@ -9,13 +9,14 @@ React 基础虚拟列表，实现了常用功能并且易于二次开发。[在�
 - 实现了常用功能并且易于二次开发，见[开发指南](#开发指南)。
 - 支持每项高度固定和不固定的列表。
 - 高性能。针对每项高度不同的列表，不会获取每项的高度。
-- 导出文件包含 typescript 定义文件, cjs 文件，es 文件，iife 文件和 iife source map。iife 文件供浏览器直接调用，见 [iife](#iife).
+- 导出文件包括格式： typescript, cjs, esm, iife, iife source map. iife 文件供浏览器直接调用，见 [iife](#iife).
 
 ## 安装
 
-```sh
-npm install @phphe/react-base-virtual-list --save
-```
+- npm: `npm install @phphe/react-base-virtual-list`
+- yarn: `yarn add @phphe/react-base-virtual-list`
+- pnpm: `pnpm add @phphe/react-base-virtual-list`
+- CDN: 见 [iife](#iife).
 
 ## 使用
 
