@@ -109,6 +109,7 @@ interface VirtualListHandle {
     index: number,
     block?: "start" | "end" | "center" | "nearest"
   ): void;
+  getRootElement(): HTMLElement;
   forceUpdate(): void;
 }
 ```
@@ -116,6 +117,7 @@ interface VirtualListHandle {
 Then use the `ref` object to access the exposed methods.
 
 - `scrollToIndex`: `(index:number, block = 'start'):void`. Scroll to the specified index position. `block` is equal to the `block` option of the HTML native method `scrollIntoView`.
+- `getRootElement`: Get list HTML element。
 - `forceUpdate`: Forcefully re-render the list. This can be called after the visible area of the list changes.
 
 ## Note

@@ -63,8 +63,8 @@ export const defaultProps = {
 
 export interface VirtualListHandle {
   scrollToIndex(index: number, block?: 'start' | 'end' | 'center' | 'nearest'): void
-  forceUpdate(): void
   getRootElement(): HTMLElement
+  forceUpdate(): void
 }
 
 export const VirtualList = forwardRef(function <ITEM>(
@@ -188,11 +188,11 @@ export const VirtualList = forwardRef(function <ITEM>(
       prevScrollTop.current = scrollTop
       setShouldScrollToIndex([]) // ensure re-render but exclude itemSize. setForceRerender will re calculate avg itemSize, so don't use it here.
     },
-    forceUpdate() {
-      setForceRerender([])
-    },
     getRootElement() {
       return list.current!
+    },
+    forceUpdate() {
+      setForceRerender([])
     },
   }), [itemSize]);
   // scrollToIndex

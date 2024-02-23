@@ -109,6 +109,7 @@ interface VirtualListHandle {
     index: number,
     block?: "start" | "end" | "center" | "nearest"
   ): void;
+  getRootElement(): HTMLElement;
   forceUpdate(): void;
 }
 ```
@@ -116,6 +117,7 @@ interface VirtualListHandle {
 然后使用获取到的`ref`对象操作暴露的方法。
 
 - `scrollToIndex`: `(index:number, block = 'start'):void`. 滚动到指定索引位置。`block`等于 HTML 原生方法`scrollIntoView`的`block`选项。
+- `getRootElement`: 获取列表 HTML 元素。
 - `forceUpdate`: 强制重新渲染列表。可以再列表可见区域变换后调用此方法。
 
 ## 注意
