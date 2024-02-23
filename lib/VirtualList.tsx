@@ -130,17 +130,22 @@ export const VirtualList = forwardRef(function <ITEM>(
     setListSize(list.current!.clientHeight)
     // get avg item size
     if (props.itemSize == null) {
+      // get gap
+      const listInnerEl = listInner.current as HTMLElement
+      let gap = parseFloat(getComputedStyle(listInnerEl).rowGap)
+      gap = isNaN(gap) ? 0 : gap
+      // 
       let count = 0
       let totalHeight = 0
       const persistentIndices = new Set(props.persistentIndices || [])
       let i = -1
-      for (const el of listInner.current!.children) {
+      for (const el of listInnerEl.children) {
         i++
         if (persistentIndices.has(visibleIndices[i])) {
           continue
         }
         const style = getComputedStyle(el)
-        totalHeight += (el as HTMLElement).offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
+        totalHeight += (el as HTMLElement).offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom) + gap
         count++
       }
       setItemSize(totalHeight / count)
