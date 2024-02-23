@@ -77,7 +77,7 @@ export default function BaseExample() {
 - `listSize`: `number`, 默认值: 1000. 列表的可见区域高度。仅用于 DOM 创建前使用，适用于 SSR.
 - `triggerDistance`: `number`. 滚动时触发重新渲染的距离。
 - `onScroll`: `React.UIEventHandler`. 监听列表的 scorll 事件。类型与 HTML 原生 onscroll 监听器相同。
-- `virtual`: `boolean`. 默认`false`. 是否启用虚拟列表。不启用则会渲染全部列表项。
+- `virtual`: `boolean`. 默认`true`. 是否启用虚拟列表。不启用则会渲染全部列表项。
 - `className`: `string`. 附加 css class 到根元素。
 - `style`: `React.CSSProperties`. 附加 css style 到根元素。
 
