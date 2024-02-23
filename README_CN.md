@@ -78,6 +78,8 @@ export default function BaseExample() {
 - `triggerDistance`: `number`. 滚动时触发重新渲染的距离。
 - `onScroll`: `React.UIEventHandler`. 监听列表的 scorll 事件。类型与 HTML 原生 onscroll 监听器相同。
 - `virtual`: `boolean`. 默认`true`. 是否启用虚拟列表。不启用则会渲染全部列表项。
+- `renderHead`: `() => ReactNode`. 自定义列表头部持久渲染内容。适用于绝对定位，固定定位元素，和不占用太大空间的元素。
+- `renderFoot`: `() => ReactNode`. 自定义列表底部持久渲染内容。适用于绝对定位，固定定位元素，和不占用太大空间的元素。
 - `className`: `string`. 附加 css class 到根元素。
 - `style`: `React.CSSProperties`. 附加 css style 到根元素。
 

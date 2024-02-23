@@ -78,6 +78,8 @@ export default function BaseExample() {
 - `triggerDistance`: `number`. The min distance to trigger re-rendering when scrolling.
 - `onScroll`: `React.UIEventHandler`. Listen for the list's scroll event. Type is same with HTML native onscroll handle.
 - `virtual`: `boolean`. default: `true`. Whether to enable the virtual list feature. Render all items if disabled.
+- `renderHead`: `() => ReactNode`. Customize the persistent rendering content of the list header. Suitable for absolutely positioned, fixed positioned elements, and elements that do not take up too much space.
+- `renderFoot`: `() => ReactNode`. Customize the persistent rendering content of the list footer. Suitable for absolutely positioned, fixed positioned elements, and elements that do not take up too much space.
 - `className`: `string`. Add a CSS class to the list root element.
 - `style`: `React.CSSProperties`. Add CSS styles to the list root element.
 
