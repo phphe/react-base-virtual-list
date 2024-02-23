@@ -1,4 +1,4 @@
-# @phphe/react-base-virtual-list ![GitHub License](https://img.shields.io/github/license/phphe/react-base-virtual-list) ![NPM Version](https://img.shields.io/npm/v/@phphe/react-base-virtual-list) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/phphe/react-base-virtual-list/build.yml) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40phphe%2Freact-base-virtual-list)
+# react-base-virtual-list ![GitHub License](https://img.shields.io/github/license/phphe/react-base-virtual-list) ![NPM Version](https://img.shields.io/npm/v/react-base-virtual-list) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/phphe/react-base-virtual-list/build.yml) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40phphe%2Freact-base-virtual-list)
 
 [English](README.md)
 
@@ -13,15 +13,15 @@ React 基础虚拟列表，实现了常用功能并且易于二次开发。[在�
 
 ## 安装
 
-- npm: `npm install @phphe/react-base-virtual-list`
-- yarn: `yarn add @phphe/react-base-virtual-list`
-- pnpm: `pnpm add @phphe/react-base-virtual-list`
+- npm: `npm install react-base-virtual-list`
+- yarn: `yarn add react-base-virtual-list`
+- pnpm: `pnpm add react-base-virtual-list`
 - CDN: 见 [iife](#iife).
 
 ## 使用
 
 ```tsx
-import { VirtualList } from "@phphe/react-base-virtual-list";
+import { VirtualList } from "react-base-virtual-list";
 
 export default function BaseExample() {
   const exampleData = [
@@ -90,7 +90,7 @@ export default function BaseExample() {
 
 ```tsx
 import { useRef } from "react";
-import { VirtualList, VirtualListHandle } from "@phphe/react-base-virtual-list";
+import { VirtualList, VirtualListHandle } from "react-base-virtual-list";
 
 export default function BaseExample() {
   const ref = useRef<VirtualListHandle>(null);
@@ -135,8 +135,8 @@ interface VirtualListHandle {
 
 你也可以使用如下第三方 CDN 的地址引入。
 
-- unpkg: https://unpkg.com/@phphe/react-base-virtual-list
-- jsdelivr: https://cdn.jsdelivr.net/npm/@phphe/react-base-virtual-list
+- unpkg: https://unpkg.com/react-base-virtual-list
+- jsdelivr: https://cdn.jsdelivr.net/npm/react-base-virtual-list
 
 ## 开发指南
 
