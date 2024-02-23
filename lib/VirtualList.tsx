@@ -3,9 +3,6 @@ import React, {
   useMemo, useRef, ReactNode, useLayoutEffect, useImperativeHandle
 } from 'react';
 
-type OptionalKeys<T> = {
-  [K in keyof T]?: T[K];
-};
 // fix forwardRef type for generic types. refer: https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref
 export type FixedForwardRef = < T, P = {} > (
   render: (props: P, ref: React.Ref<T>) => React.ReactElement | null,
@@ -41,9 +38,17 @@ export type VirtualListProps<ITEM> = {
    * listen to scroll event.
    */
   onScroll?: typeof document.onscroll,
+  /**
+   * Insert elements at the head. Recommended to only insert elements that do not take up space or take very little space, such as position absolute.
+   */
+  renderHead?: () => ReactNode,
+  /**
+   * Insert elements at the foot. Recommended to only insert elements that do not take up space or take very little space, such as position absolute.
+   */
+  renderFoot?: () => ReactNode,
   className?: string,
   style?: React.CSSProperties,
-} & OptionalKeys<typeof defaultProps>
+} & Partial<typeof defaultProps>
 
 export const defaultProps = {
   /**
@@ -59,6 +64,7 @@ export const defaultProps = {
 export interface VirtualListHandle {
   scrollToIndex(index: number, block?: 'start' | 'end' | 'center' | 'nearest'): void
   forceUpdate(): void
+  getRootElement(): HTMLElement
 }
 
 export const VirtualList = forwardRef(function <ITEM>(
@@ -180,6 +186,9 @@ export const VirtualList = forwardRef(function <ITEM>(
     forceUpdate() {
       setforceRerender([])
     },
+    getRootElement() {
+      return list.current!
+    },
   }), [itemSize]);
   // scrollToIndex
   useLayoutEffect(() => {
@@ -197,9 +206,11 @@ export const VirtualList = forwardRef(function <ITEM>(
   }, [shouldScrollToIndex])
   // 
   return <div ref={list} onScroll={handleScroll} className={props.className} style={{ overflow: 'auto', ...props.style }}>
+    {props.renderHead?.()}
     <div ref={listInner} style={{ display: 'flex', flexDirection: 'column', ...(props.virtual && listInnerStyle) }}>
       {visible.map((item, i) => props.renderItem(item, visibleIndices[i]))}
     </div>
+    {props.renderFoot?.()}
   </div>
 })
 
