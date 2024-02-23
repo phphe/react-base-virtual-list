@@ -209,6 +209,17 @@ export const VirtualList = forwardRef(function <ITEM>(
       }
     }
   }, [shouldScrollToIndex])
+  // use ResizeObserver listen list size change
+  useLayoutEffect(() => {
+    const { ResizeObserver } = window
+    const observer = ResizeObserver && new ResizeObserver(() => {
+      setListSize(list.current!.clientHeight)
+    })
+    observer.observe(list.current as HTMLElement)
+    return () => {
+      observer?.disconnect()
+    }
+  }, [])
   // 
   return <div ref={list} onScroll={handleScroll} className={props.className} style={{ overflow: 'auto', ...props.style }}>
     {props.renderHead?.()}
