@@ -71,17 +71,17 @@ export const VirtualList = forwardRef(function <ITEM>(
   props: VirtualListProps<ITEM>,
   ref: React.ForwardedRef<VirtualListHandle>
 ) {
-  const [itemSize, setitemSize] = useState(props.itemSize || 100);
+  const [itemSize, setItemSize] = useState(props.itemSize || 100);
   const buffer = useMemo(() => props.buffer || Math.max(itemSize * 5, 100), [props.buffer, itemSize]);
   const count = props.items.length
   const list = useRef<HTMLDivElement>(null);
   const listInner = useRef<HTMLDivElement>(null);
   const prevScrollTop = useRef(0);
   const scrollToIndexRef = useRef<{ index: number, block: string }>();
-  const [shouldScrollToIndex, setshouldScrollToIndex] = useState([]);
-  const [scrollTop, setscrollTop] = useState(0);
-  const [listSize, setlistSize] = useState(props.listSize!);
-  const [forceRerender, setforceRerender] = useState([]); // change value to force rerender
+  const [shouldScrollToIndex, setShouldScrollToIndex] = useState([]);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [listSize, setListSize] = useState(props.listSize!);
+  const [forceRerender, setForceRerender] = useState([]); // change value to force rerender
   const ignoreUpdateScrollTopOnce = useRef(false);
   // 
   const mainCache = useMemo(() => {
@@ -127,7 +127,7 @@ export const VirtualList = forwardRef(function <ITEM>(
   }
 
   useLayoutEffect(() => {
-    setlistSize(list.current!.clientHeight)
+    setListSize(list.current!.clientHeight)
     // get avg item size
     if (props.itemSize == null) {
       let count = 0
@@ -143,7 +143,7 @@ export const VirtualList = forwardRef(function <ITEM>(
         totalHeight += (el as HTMLElement).offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
         count++
       }
-      setitemSize(totalHeight / count)
+      setItemSize(totalHeight / count)
     }
   }, [props.itemSize, props.items, forceRerender]);
   //
@@ -156,14 +156,14 @@ export const VirtualList = forwardRef(function <ITEM>(
       return
     }
 
-    setlistSize(list.current!.clientHeight)
+    setListSize(list.current!.clientHeight)
 
     if (ignoreUpdateScrollTopOnce.current) {
       ignoreUpdateScrollTopOnce.current = false
     } else {
       const scrollTop = list.current!.scrollTop;
       if (Math.abs(prevScrollTop.current - scrollTop) > (props.triggerDistance ?? itemSize)) {
-        setscrollTop(scrollTop)
+        setScrollTop(scrollTop)
         prevScrollTop.current = scrollTop
       }
     }
@@ -179,12 +179,12 @@ export const VirtualList = forwardRef(function <ITEM>(
       }
       const scrollTop = index * itemSize // estimated value
       list.current!.scrollTop = scrollTop
-      setscrollTop(scrollTop)
+      setScrollTop(scrollTop)
       prevScrollTop.current = scrollTop
-      setshouldScrollToIndex([]) // ensure re-render but exclude itemSize. setforceRerender will re calculate avg itemSize, so don't use it here.
+      setShouldScrollToIndex([]) // ensure re-render but exclude itemSize. setForceRerender will re calculate avg itemSize, so don't use it here.
     },
     forceUpdate() {
-      setforceRerender([])
+      setForceRerender([])
     },
     getRootElement() {
       return list.current!
