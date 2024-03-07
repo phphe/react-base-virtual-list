@@ -149,6 +149,12 @@ export const VirtualList = forwardRef(function <ITEM>(
           continue
         }
         const style = getComputedStyle(el)
+        if (style.display === 'none') {
+          continue
+        }
+        if (style.position !== 'static' && style.position !== 'relative') {
+          continue
+        }
         totalHeight += (el as HTMLElement).offsetHeight + parseFloat(style.marginTop) + parseFloat(style.marginBottom) + gap
         count++
       }
