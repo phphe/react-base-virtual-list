@@ -83,6 +83,7 @@ export default function BaseExample() {
 - `renderFoot`: `() => ReactNode`. Customize the persistent rendering content of the list footer. Suitable for absolutely positioned, fixed positioned elements, and elements that do not take up too much space.
 - `className`: `string`. Add a CSS class to the list root element.
 - `style`: `React.CSSProperties`. Add CSS styles to the list root element.
+- `innerClassName`: `string`. Add a CSS class to the list inner element.
 
 ## Exposed Methods
 

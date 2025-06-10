@@ -18,6 +18,8 @@ export default function ScrollToIndexExample() {
     <VirtualList
       ref={ref}
       items={exampleData}
+      className='test-class'
+      innerClassName='test-inner-class'
       style={{ height: '600px', border: '1px solid #ccc', padding: '10px' }}
       renderItem={
         (item, index) => <div key={index} style={{ marginBottom: '10px' }}>
