@@ -1,5 +1,11 @@
 # react-base-virtual-list
 
+## 1.2.8
+
+### Patch Changes
+
+- d8cfd4e: chore: fix workflow
+
 ## 1.2.7
 
 ### Patch Changes
