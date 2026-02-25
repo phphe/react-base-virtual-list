@@ -10,6 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # for github
+      id-token: write # for npm
 
     steps:
       - name: Checkout Repository
