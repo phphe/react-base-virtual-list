@@ -1,5 +1,11 @@
 # react-base-virtual-list
 
+## 1.2.5
+
+### Patch Changes
+
+- 1ba4caa: chore: test workflow
+
 ## 1.2.4
 
 ### Patch Changes
