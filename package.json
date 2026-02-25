@@ -34,7 +34,7 @@
     "preview": "vite preview",
     "change": "changeset",
     "version": "changeset version",
-    "publish": "pnpm run build && changeset publish"
+    "release": "pnpm run build && changeset publish"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
