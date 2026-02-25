@@ -33,8 +33,9 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "change": "changeset",
-    "version-packages": "changeset version",
-    "release": "changeset publish"
+    "version": "changeset version",
+    "publish": "changeset publish",
+    "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
     "react": "^18 || ^19",
