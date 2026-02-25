@@ -1,5 +1,11 @@
 # react-base-virtual-list
 
+## 1.2.4
+
+### Patch Changes
+
+- ba61b37: fix: add prepublishOnly hook in package.json
+
 ## 1.2.3
 
 ### Patch Changes
