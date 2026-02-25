@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [UnoCSS(), react()],
   base: "/react-base-virtual-list",
   define: {
-    __BUILD_TIME__: JSON.stringify(new Date().toLocaleString()),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },
   build: {
     outDir: "dist-demo",

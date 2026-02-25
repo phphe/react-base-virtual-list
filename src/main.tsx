@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 // print build time in production
 if (import.meta.env.PROD) {
   // @ts-ignore
-  console.log('Build Time', __BUILD_TIME__);
+  console.log('Build Time', new Date(__BUILD_TIME__).toLocaleString());
 }
