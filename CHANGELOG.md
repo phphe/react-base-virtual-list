@@ -1,5 +1,11 @@
 # react-base-virtual-list
 
+## 1.2.6
+
+### Patch Changes
+
+- ed3bf01: chore: fix workflow
+
 ## 1.2.5
 
 ### Patch Changes
