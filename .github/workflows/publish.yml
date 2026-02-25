@@ -6,10 +6,12 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write # 用于 Changesets 评论 PR
+  pull-requests: write # 用于 Changesets 创建 PR
   id-token: write
   pages: write # 必须：部署 Pages 需要
   deployments: write
+
+concurrency: ${{ github.workflow }}-${{ github.ref }} # 避免重复发布，旧的action运行完成后才会执行新的
 
 jobs:
   # 任务 1：发布到 npm
