@@ -1,8 +1,8 @@
-# react-base-virtual-list ![GitHub License](https://img.shields.io/github/license/phphe/react-base-virtual-list) ![NPM Version](https://img.shields.io/npm/v/react-base-virtual-list) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/phphe/react-base-virtual-list/build.yml) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/react-base-virtual-list)
+# react-base-virtual-list ![License](https://img.shields.io/github/license/phphe/react-base-virtual-list) ![NPM Version](https://img.shields.io/npm/v/react-base-virtual-list) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/phphe/react-base-virtual-list/publish.yml) [![Changelog](https://img.shields.io/badge/changelog-latest-blue.svg)](./CHANGELOG.md)
 
 [中文](README_CN.md)
 
-React basic virtual list, supports common features and is easy to customize. Support React 18, 19. [Online Demo](https://phphe.github.io/react-base-virtual-list/)
+React basic virtual list, supports common features and is easy to customize. Support React 18, 19. [Online Demo](https://phphe.github.io/react-base-virtual-list/) | [Changelog](./CHANGELOG.md)
 
 ## Features
 
@@ -111,7 +111,7 @@ Irrelevant parts are omitted in the above code. `VirtualListHandle` is a `typesc
 interface VirtualListHandle {
   scrollToIndex(
     index: number,
-    block?: "start" | "end" | "center" | "nearest"
+    block?: "start" | "end" | "center" | "nearest",
   ): void;
   getRootElement(): HTMLElement;
   forceUpdate(): void;
@@ -142,10 +142,6 @@ You can also use the following third-party CDN url to include it.
 ## Development
 
 - `lib`: The main files, also the files that are packaged into the library. Running `npm run build` will package the files in this directory into the `dist` folder. The corresponding Vite configuration file is `vite.build.ts`.
-- `src`: The files used for development and debugging. Running `npm run dev` will run the code in this directory in the browser. Running `npm run build:web` will package the code in this directory into the `dist` folder. The corresponding Vite configuration file is `vite.config.ts`.
+- `src`: The files used for development and debugging. Running `npm run dev` will run the code in this directory in the browser. Running `npm run demo:build` will package the code in this directory into the `dist-demo` folder. The corresponding Vite configuration file is `vite.config.ts`.
 - `uno.config.ts`: [unocss](https://github.com/unocss/unocss) configuration file. `unocss` only works in the `src` folder. With the current configuration, you can use `Tailwindcss` style class names.
-- `.github/workflows/build.yml`: Some automated actions performed when publishing to GitHub. You can delete or modify it.
-
-## Changelog
-
-https://github.com/phphe/react-base-virtual-list/releases
+- `.github/workflows/publish.yml`: Some automated actions performed when publishing to GitHub pages and npmjs.com. You can delete or modify it.

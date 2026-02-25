@@ -1,8 +1,8 @@
-# react-base-virtual-list ![GitHub License](https://img.shields.io/github/license/phphe/react-base-virtual-list) ![NPM Version](https://img.shields.io/npm/v/react-base-virtual-list) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/phphe/react-base-virtual-list/build.yml) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/%40phphe%2Freact-base-virtual-list)
+# react-base-virtual-list ![License](https://img.shields.io/github/license/phphe/react-base-virtual-list) ![NPM Version](https://img.shields.io/npm/v/react-base-virtual-list) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/phphe/react-base-virtual-list/publish.yml) [![Changelog](https://img.shields.io/badge/changelog-latest-blue.svg)](./CHANGELOG.md)
 
 [English](README.md)
 
-React 基础虚拟列表，实现了常用功能并且易于二次开发。支持React 18, 19。[在线示例](https://phphe.github.io/react-base-virtual-list/)
+React 基础虚拟列表，实现了常用功能并且易于二次开发。支持React 18, 19。[在线示例](https://phphe.github.io/react-base-virtual-list/) | [更新记录](./CHANGELOG.md)
 
 ## 特点
 
@@ -141,10 +141,6 @@ interface VirtualListHandle {
 ## 开发指南
 
 - `lib`: 主要文件，也是打包成库的文件。运行`npm run build`会打包其中的文件到`dist`目录。对应 vite 配置文件为: `vite.build.ts`.
-- `src`: 开发时调试的文件。运行`npm run dev`会在浏览器中运行其中的代码。运行`npm run build:web`会把其中的代码打包到`dist`目录。对应 vite 配置文件为: `vite.config.ts`.
+- `src`: 开发时调试的文件。运行`npm run dev`会在浏览器中运行其中的代码。运行`npm run demo:build`会把其中的代码打包到`dist-demo`目录。对应 vite 配置文件为: `vite.config.ts`.
 - `uno.config.ts`: [unocss](https://github.com/unocss/unocss) 配置文件。`unocss`仅在`src`文件夹生效。当前配置下，你可以使用`Tailwindcss`风格的`class`名。
-- `.github/workflows/build.yml`: 发布到 github 时自动进行的一些操作。你可以删除或者修改。
-
-## 更新日志(changelog)
-
-https://github.com/phphe/react-base-virtual-list/releases
+- `.github/workflows/publish.yml`: 发布到 github pages 和 npmjs.com 时自动进行的一些操作。你可以删除或者修改。
