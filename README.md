@@ -2,7 +2,7 @@
 
 [中文](README_CN.md)
 
-React basic virtual list, supports common features and is easy to customize. [Online Demo](https://phphe.github.io/react-base-virtual-list/)
+React basic virtual list, supports common features and is easy to customize. Support React 18, 19. [Online Demo](https://phphe.github.io/react-base-virtual-list/)
 
 ## Features
 

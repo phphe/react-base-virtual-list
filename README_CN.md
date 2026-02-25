@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-React 基础虚拟列表，实现了常用功能并且易于二次开发。[在线示例](https://phphe.github.io/react-base-virtual-list/)
+React 基础虚拟列表，实现了常用功能并且易于二次开发。支持React 18, 19。[在线示例](https://phphe.github.io/react-base-virtual-list/)
 
 ## 特点
 
@@ -110,7 +110,7 @@ export default function BaseExample() {
 interface VirtualListHandle {
   scrollToIndex(
     index: number,
-    block?: "start" | "end" | "center" | "nearest"
+    block?: "start" | "end" | "center" | "nearest",
   ): void;
   getRootElement(): HTMLElement;
   forceUpdate(): void;
